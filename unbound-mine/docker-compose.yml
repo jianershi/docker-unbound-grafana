@@ -1,0 +1,12 @@
+services:
+  unbound-mine:
+    container_name: unbound-mine
+    image: unbound-mine
+    build: .
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    network_mode: "my-network"
+    volumes:
+      - "/etc/unbound:/etc/unbound"
+    restart: always

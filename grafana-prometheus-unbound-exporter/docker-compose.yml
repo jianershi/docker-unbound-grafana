@@ -1,0 +1,44 @@
+services:
+  grafana:
+    container_name: grafana
+    image: grafana/grafana-enterprise
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    user: '104'
+    networks:
+      - backend
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    networks:
+      - backend
+    volumes:
+      - "/etc/prometheus:/etc/prometheus"
+    restart: unless-stopped
+    depends_on:
+      - unbound-prometheus-exporter
+
+  unbound-prometheus-exporter:
+    container_name: unbound-prometheus-exporter
+    image: paulshi/unbound_exporter
+    build:
+      context: ./unbound-prometheus-exporter
+      args:
+        UNBOUND_CONTAINER_NAME: unbound-mine
+    networks:
+      - backend
+    volumes:
+      - "/etc/unbound:/etc/unbound"
+    restart: unless-stopped
+
+networks:
+    backend:
+      name: my-network
+volumes:
+  grafana-storage:
