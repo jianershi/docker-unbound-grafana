@@ -2,7 +2,7 @@ FROM alpine:latest
 
 WORKDIR /app
 RUN apk add --no-cache g++ make openssl openssl-dev expat-dev libevent-dev
-RUN wget https://nlnetlabs.nl/downloads/unbound/unbound-latest.tar.gz
+ADD https://nlnetlabs.nl/downloads/unbound/unbound-latest.tar.gz unbound-latest.tar.gz
 RUN mkdir unbound-latest
 RUN tar zxf unbound-latest.tar.gz --strip-components 1 -C unbound-latest
 
