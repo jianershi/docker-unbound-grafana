@@ -1,5 +1,6 @@
 FROM golang:latest
 
+ADD https://api.github.com/repos/letsencrypt/unbound_exporter/git/refs/heads/main version.json
 WORKDIR /app
 RUN git clone https://github.com/letsencrypt/unbound_exporter.git /app
 RUN go get -d ./...
@@ -8,12 +9,12 @@ RUN sed -i "s/localhost/${UNBOUND_CONTAINER_NAME}/g" unbound_exporter.go
 RUN CGO_ENABLED=0 GOOS=linux go build --ldflags '-extldflags "-static"' -o unbound_exporter
 RUN strip unbound_exporter
 
-FROM alpine:latest  
+FROM alpine:latest
 WORKDIR /root
 COPY --from=0 /app/unbound_exporter .
 
 EXPOSE 9167
-CMD ["./unbound_exporter"]  
+CMD ["./unbound_exporter"]
 
 # COPY app.go .
 # RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
