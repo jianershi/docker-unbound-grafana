@@ -27,7 +27,7 @@
   "gnetId": 11705,
   "graphTooltip": 0,
   "id": 2,
-  "iteration": 1662338147324,
+  "iteration": 1667092049027,
   "links": [
     {
       "icon": "external link",
@@ -4327,7 +4327,7 @@
             "type": "prometheus",
             "uid": "sUrwZhgVk"
           },
-          "expr": "unbound_memory_modules_bytes",
+          "expr": "unbound_memory_modules_bytes{instance=\"$instance\"}",
           "legendFormat": "{{module}}",
           "refId": "A"
         }
@@ -4517,6 +4517,6 @@
   "timezone": "",
   "title": "Unbound",
   "uid": "9FQf4fEWz",
-  "version": 5,
+  "version": 6,
   "weekStart": ""
 }
