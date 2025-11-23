@@ -29,13 +29,13 @@ services:
     image: paulshi/unbound_exporter
     build:
       context: ./unbound-prometheus-exporter
-      args:
-        UNBOUND_CONTAINER_NAME: unbound-mine
     networks:
       - backend
     volumes:
-      - "/etc/unbound:/etc/unbound"
+      - "/run/unbound:/run/unbound:ro"
     restart: unless-stopped
+    command:
+      - "-unbound.host=unix:///run/unbound/unbound.socket"
 
 networks:
     backend:
